@@ -1,0 +1,95 @@
+\documentclass[12pt]{article}
+
+%DEFINIZIONE DEI PACCHETTI GENERICI
+\usepackage[a4paper,top=3.5cm,bottom=2.5cm,left=3cm,right=3.5cm]{geometry}
+\usepackage{times}
+\usepackage{titlesec}
+%\usepackage{lipsum}
+\usepackage{titletoc}
+
+%DEFINIZIONE DEI PACCHETTI MATEMATICI
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%STILE DELLE PROPOSIZIONI
+\theoremstyle{plain}
+
+% Intestazioni in ingelse
+%\newtheorem{thm}{Theorem}[section]
+%\newtheorem{lem}[thm]{Lemma}
+%\newtheorem{prop}[thm]{Proposition}
+%\newtheorem{cor}[thm]{Corollary}
+%\newtheorem{defn}[thm]{Definition}
+%\newtheorem{rmk}[thm]{Remark}
+%\newtheorem{ex}[thm]{Example}
+%\newtheorem{prob}[thm]{Problem}
+%\newtheorem*{notat*}{Notation}
+
+% Intestazioni in italiano
+\newtheorem{thm}{Teorema}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposizione}
+\newtheorem{cor}[thm]{Corollario}
+\newtheorem{defn}[thm]{Definizione}
+\newtheorem{rmk}[thm]{Osservazione}
+\newtheorem{ex}[thm]{Esempio}
+\newtheorem{prob}[thm]{Problema}
+\newtheorem*{notat*}{Notazione}
+
+%STILE DELLE SEZIONI
+\titleformat{\section}
+{\normalfont \scshape \centering}{\thesection.}{0,5em}{}
+\titlespacing*{\section}{0pt}{50pt}{0.5cm}
+
+\titleformat{\subsection}
+{\normalfont \bfseries }{ \normalfont \thesubsection.}{0,5em}{}
+\titlespacing*{\subsection}{0pt}{50pt}{0.5cm}
+
+\titlecontents{section}[0cm]{}
+{\normalfont \thecontentslabel. \enspace}
+{\hspace*{-5.3em}}
+{ \hfill \normalfont \contentspage}
+
+\titlecontents{subsection}[0cm]{}
+{\normalfont \thecontentslabel. \enspace}
+{\hspace*{-5.3em}}
+{ \hfill \normalfont \contentspage}
+
+%OPZIONI PER LA BIBLIOGRAFIA
+\usepackage[
+backend=bibtex,
+style=alphabetic,
+]{biblatex}
+\addbibresource{bibliography.bib}
+\AtNextBibliography{\small}
+
+
+%INIZIO DEL DOCUMENTO
+\begin{document}
+	
+	\fontsize{15pt}{0pt}
+	\begin{center}
+		\textbf{Neural Networks Foundations}
+	\end{center}
+
+    \fontsize{12pt}{0pt}
+	\tableofcontents
+
+    %INIZIA A SCRIVERE QUI
+
+    \section{Neurons}
+    In this chapter we introduce and study neurons. We are gonna start by the more basic one and proceed adding things until we reach a complete and full explanations of how neurons works and what they can do.
+
+    During this chapter we are going to introduce also notions of linear algebra, affine geometry and calculus to give to neurons a mathematical reason.
+
+    For coding in this first chapter we are going to use C and Python.
+    
+    \vspace{-1.5cm}
+    \subsection{Basic neuron}
+    
+	%STAMPA DELLA BIBLIOGRAFIA
+	\printbibliography[title=References and Bibliography]
+	
+\end{document}
