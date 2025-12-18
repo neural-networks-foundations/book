@@ -17,35 +17,37 @@
 \theoremstyle{plain}
 
 % Intestazioni in ingelse
-%\newtheorem{thm}{Theorem}[section]
-%\newtheorem{lem}[thm]{Lemma}
-%\newtheorem{prop}[thm]{Proposition}
-%\newtheorem{cor}[thm]{Corollary}
-%\newtheorem{defn}[thm]{Definition}
-%\newtheorem{rmk}[thm]{Remark}
-%\newtheorem{ex}[thm]{Example}
-%\newtheorem{prob}[thm]{Problem}
-%\newtheorem*{notat*}{Notation}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{ex}[thm]{Example}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem*{quest*}{Question}
+\newtheorem*{notat*}{Notation}
 
 % Intestazioni in italiano
-\newtheorem{thm}{Teorema}[section]
-\newtheorem{lem}[thm]{Lemma}
-\newtheorem{prop}[thm]{Proposizione}
-\newtheorem{cor}[thm]{Corollario}
-\newtheorem{defn}[thm]{Definizione}
-\newtheorem{rmk}[thm]{Osservazione}
-\newtheorem{ex}[thm]{Esempio}
-\newtheorem{prob}[thm]{Problema}
-\newtheorem*{notat*}{Notazione}
+%\newtheorem{thm}{Teorema}[section]
+%\newtheorem{lem}[thm]{Lemma}
+%\newtheorem{prop}[thm]{Proposizione}
+%\newtheorem{cor}[thm]{Corollario}
+%\newtheorem{defn}[thm]{Definizione}
+%\newtheorem{rmk}[thm]{Osservazione}
+%\newtheorem{ex}[thm]{Esempio}
+%\newtheorem{prob}[thm]{Problema}
+%\newtheorem*{notat*}{Notazione}
+%\newtheorem*{quest*}{Domanda}
 
 %STILE DELLE SEZIONI
 \titleformat{\section}
 {\normalfont \scshape \centering}{\thesection.}{0,5em}{}
-\titlespacing*{\section}{0pt}{50pt}{0.5cm}
+%\titlespacing*{\section}{0pt}{50pt}{0.5cm}
 
 \titleformat{\subsection}
-{\normalfont \bfseries }{ \normalfont \thesubsection.}{0,5em}{}
-\titlespacing*{\subsection}{0pt}{50pt}{0.5cm}
+{\normalfont \bfseries }{\normalfont \thesubsection.}{0,5em}{}
+%\titlespacing*{\subsection}{0pt}{50pt}{0.5cm}
 
 \titlecontents{section}[0cm]{}
 {\normalfont \thecontentslabel. \enspace}
@@ -59,26 +61,100 @@
 
 %OPZIONI PER LA BIBLIOGRAFIA
 \usepackage[
-backend=bibtex,
+%backend=bibtex,
+backend=biber,
 style=alphabetic,
 ]{biblatex}
 \addbibresource{bibliography.bib}
 \AtNextBibliography{\small}
 
+% imposto lo stile dell'abstract
+\renewcommand{\abstractname}{\normalfont \scshape \centering Abstract}
 
 %INIZIO DEL DOCUMENTO
 \begin{document}
-	
-	\fontsize{15pt}{0pt}
+
+    % impostazione del titolo
 	\begin{center}
-		\textbf{Neural Networks Foundations}
+	    \fontsize{12pt}{0pt} % dimensioni del titolo
+        \textbf{NEURAL NETWORKS FOUNDATIONS} % titolo
 	\end{center}
 
-    \fontsize{12pt}{0pt}
-	\tableofcontents
+    %impostazione dell'indice
+    {
+    \fontsize{12pt}{0pt} % dimensioni delle voci
+    \tableofcontents % print della tavola dei contenuti
+    }
 
+    \fontsize{12pt}{0pt} % dimensione del font e spaziatura tra le righe
     %INIZIA A SCRIVERE QUI
 
+    \section{Vector spaces and linear 1-forms}
+    In this chapter we define vector spaces and the linear functions between them.
+
+    We begin by talking of groups.
+    \begin{defn}
+        Let $G \neq \emptyset$ a set, with a function, called operation
+        \[ \cdot : G \times G \longrightarrow G.\]
+        We say that $(G,+)$ is a \textbf{group} if
+        \begin{enumerate}
+            \item[(a)] there exists $e \in G$ such that $g\cdot e = g$, for all $g \in G$;
+            \item[(b)] for all $g \in G$ the exists $h \in G$ such that $g \cdot h = e$;
+            \item[(c)] the operation is associative, i.e. for all $g, h, t \in G$
+            \[ g \cdot (h \cdot t) = (g \cdot h) \cdot t.\]
+        \end{enumerate}
+    \end{defn}
+
+    \begin{rmk}
+        In general the operation on $G$ is not commutative.
+    \end{rmk}
+
+    \begin{defn}
+        Give a group $(G, \cdot)$, we say that $G$ is an $\textbf{abelian group}$ if the operation is commutative, i.e.
+        \[ g_1 \cdot g_2 = g_2 \cdot g_1, \, \forall g_1, g_2 \in G.\]
+    \end{defn}
+
+    \begin{defn}
+        Let $A \neq \emptyset$ a set. Consider two operation on $A$ 
+        \[ + : A \times A \longrightarrow A\]
+        \[ \cdot : A \times A \longrightarrow A,\]
+
+        we define the triplets $(A, +, \cdot)$ to be a ring if:
+        \begin{enumerate}
+            \item[(1)] $(A, +)$ is an abelian group with identity element $0$;
+            \item[(2)] $\cdot$ is an associative operation;
+            \item[(3)] it holds the distributive property
+            \[ a \cdot (b + c) = a \cdot b + a \cdot c\]
+            and \[ (b +c ) \cdot a = b \cdot a + c \cdot a;\]
+            \item[(4)] $a \cdot 0 = 0 \cdot a = 0.$
+        \end{enumerate}
+        We define $(A, +, \cdot)$ to be a unitary ring if there exits an alement $1 \in A$ such that
+        \[ a \cdot 1 = 1 \cdot a = a,\, \forall a \in A.\]
+        We define $(A, +, \cdot)$ to be a commutative ring if, for all $a,b \in A$ it holds
+        \[ a \cdot b = b \cdot a.\]
+    \end{defn}
+
+    \begin{defn}
+        We call a ring $A$ a \textbf{field} if its commutative and for every $a \in A$ there exists $b \in A$ such that $a\cdot b = 1$. We denote $b = a^{-1}$.
+    \end{defn}
+
+    \begin{defn}
+        A \textbf{vector space over a field k} is an abelian group $(V,+)$ with an operation called \textbf{multiplication for a scalar} 
+        \[ k \times V \longrightarrow V\] \[ (k,v) \longmapsto k\cdot v.\]
+    \end{defn}
+
+    \begin{defn}
+        Consider two vector spaces $V, W$ and a map $f:V \longrightarrow W$. We call $f$ to be \textbf{k-linear} (or \textbf{linear}) if 
+        \[ f(v+w) = f(v) + f(w)\]
+        and 
+        \[ f(\lambda \cdot v) = \lambda \cdot f(v).\]
+    \end{defn}
+
+    \begin{defn}
+        Given a vector space $V$ we call \textbf{1-form} a linear function $f :V \longrightarrow k$.
+        The set of all 1-forms on the vector space $V$ is called \textbf{dual vector space} and is denoted with $V^*$.
+    \end{defn}
+    
     \section{Neurons}
     In this chapter we introduce and study neurons. We are gonna start by the more basic one and proceed adding things until we reach a complete and full explanations of how neurons works and what they can do.
 
@@ -86,9 +162,10 @@ style=alphabetic,
 
     For coding in this first chapter we are going to use C and Python.
     
-    \vspace{-1.5cm}
+
     \subsection{Basic neuron}
     
+
 	%STAMPA DELLA BIBLIOGRAFIA
 	\printbibliography[title=References and Bibliography]
 	
