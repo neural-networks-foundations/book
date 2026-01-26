@@ -27,6 +27,7 @@
 \newtheorem{prob}[thm]{Problem}
 \newtheorem*{quest*}{Question}
 \newtheorem*{notat*}{Notation}
+\newtheorem{alg}{Algorithm}
 
 % Intestazioni in italiano
 %\newtheorem{thm}{Teorema}[section]
@@ -89,84 +90,144 @@ style=alphabetic,
     \fontsize{12pt}{0pt} % dimensione del font e spaziatura tra le righe
     %INIZIA A SCRIVERE QUI
 
-    \section{Vector spaces and linear 1-forms}
-    In this chapter we define vector spaces and the linear functions between them.
+    \section{Some linear algebra}
+    In this chapter we are going to consider only the real numbers $\mathbb{R}$.
 
-    We begin by talking of groups.
     \begin{defn}
-        Let $G \neq \emptyset$ a set, with a function, called operation
-        \[ \cdot : G \times G \longrightarrow G.\]
-        We say that $(G,+)$ is a \textbf{group} if
-        \begin{enumerate}
-            \item[(a)] there exists $e \in G$ such that $g\cdot e = g$, for all $g \in G$;
-            \item[(b)] for all $g \in G$ the exists $h \in G$ such that $g \cdot h = e$;
-            \item[(c)] the operation is associative, i.e. for all $g, h, t \in G$
-            \[ g \cdot (h \cdot t) = (g \cdot h) \cdot t.\]
-        \end{enumerate}
+        Let $f : \mathbb{R} \longrightarrow \mathbb{R}$, we say that $f$ is a linear function if
+        \[ f(\lambda \cdot x) = \lambda f(x), \forall \lambda, x \in \mathbb{R}\]
+        and
+        \[ f(x + y) = f(x) + f(y), \forall x, y \in \mathbb{R}.\]
+    \end{defn}
+
+    \begin{ex}
+        Consider $a \in \mathbb{R}$, and define $f(x) = a \cdot x$, then $f$ is linear.
+        Indeed consider $x, \lambda \in \mathbb{R}$, then
+        \[ f(\lambda x) = a \cdot (\lambda x) = (a \lambda) x = \lambda a x,\]
+        and given $x, y \in \mathbb{R}$ we have that
+        \[ f(x+y) = \lambda(x + y) = \lambda x + \lambda y = f(x) + f(y).\]
+    \end{ex}
+
+    In particular it holds.
+    \begin{lem} \label{lem:linearfun}
+        For every linear map $f : \mathbb{R} \longrightarrow \mathbb{R}$, there exists $a \in \mathbb{R}$ such that
+        \[ f(x) = a \cdot x.\]
+    \end{lem}
+
+    We now introduce a new parameter.
+    \begin{defn}
+        Consider a collection of linear function $\{f_a : \mathbb{R} \longrightarrow \mathbb{R}\}_{a \in \mathbb{R}}$. We call this collection a 1-parameter group of linear functions if 
+        \[ \lambda f_a(x) = f_{\lambda a}(x),\]
+        and
+        \[ f_a (x) + f_b(x) = f_{a+b}(x).\]
     \end{defn}
 
     \begin{rmk}
-        In general the operation on $G$ is not commutative.
+        Not every collection of linear function $\{f_a \}_{a\in \mathbb{R}}$ is a 1-parameter group of linear functions. Indeed, consider the functions $f_a(x) = c\cdot x$ for every $a \in \mathbb{R}$. Then
+        \[ f_a(x) + f_b(x) = cx + cx = 2cx \neq cx = f_{a+b}(x).\]
     \end{rmk}
 
-    \begin{defn}
-        Give a group $(G, \cdot)$, we say that $G$ is an $\textbf{abelian group}$ if the operation is commutative, i.e.
-        \[ g_1 \cdot g_2 = g_2 \cdot g_1, \, \forall g_1, g_2 \in G.\]
-    \end{defn}
+    \begin{ex} \label{ex:f_a(x)=ax}
+        Consider $f_a(x) = ax$. Then $\{f_a\}_{a\in \mathbb{R}}$ is a one parameter group of linear functions. Indeed:
+        \[ f_a(x) + f_b(x) = ax + bx = (a+b)x = f_{a+b}(x),\]
+        and
+        \[ \lambda f_a(x) = \lambda a x = f_{\lambda a}(x).\]
+    \end{ex}
+
+    \subsection{Norms}
+    Given $\mathbb{R}^n$, we define a particular new type of function.
 
     \begin{defn}
-        Let $A \neq \emptyset$ a set. Consider two operation on $A$ 
-        \[ + : A \times A \longrightarrow A\]
-        \[ \cdot : A \times A \longrightarrow A,\]
-
-        we define the triplets $(A, +, \cdot)$ to be a ring if:
+        A function $N : \mathbb{R}^n \longrightarrow \mathbb{R}^n$, is called a norm if
         \begin{enumerate}
-            \item[(1)] $(A, +)$ is an abelian group with identity element $0$;
-            \item[(2)] $\cdot$ is an associative operation;
-            \item[(3)] it holds the distributive property
-            \[ a \cdot (b + c) = a \cdot b + a \cdot c\]
-            and \[ (b +c ) \cdot a = b \cdot a + c \cdot a;\]
-            \item[(4)] $a \cdot 0 = 0 \cdot a = 0.$
+            \item[(N1)] $N(x) = 0 \implies x =0$;
+            \item[(N2)] $N(x) \ge 0, \, \forall x \in \mathbb{R}^n$;
+            \item[(N2)] $N(x+y) \le N(x) + N(y), \, \forall x, y \in \mathbb{R}^n$;
+            \item[(N3)] $N(\lambda x) = |\lambda| N(x), \, \forall \lambda \in \mathbb{R}, x \in \mathbb{R}^n$.
         \end{enumerate}
-        We define $(A, +, \cdot)$ to be a unitary ring if there exits an alement $1 \in A$ such that
-        \[ a \cdot 1 = 1 \cdot a = a,\, \forall a \in A.\]
-        We define $(A, +, \cdot)$ to be a commutative ring if, for all $a,b \in A$ it holds
-        \[ a \cdot b = b \cdot a.\]
     \end{defn}
 
-    \begin{defn}
-        We call a ring $A$ a \textbf{field} if its commutative and for every $a \in A$ there exists $b \in A$ such that $a\cdot b = 1$. We denote $b = a^{-1}$.
-    \end{defn}
-
-    \begin{defn}
-        A \textbf{vector space over a field k} is an abelian group $(V,+)$ with an operation called \textbf{multiplication for a scalar} 
-        \[ k \times V \longrightarrow V\] \[ (k,v) \longmapsto k\cdot v.\]
-    \end{defn}
-
-    \begin{defn}
-        Consider two vector spaces $V, W$ and a map $f:V \longrightarrow W$. We call $f$ to be \textbf{k-linear} (or \textbf{linear}) if 
-        \[ f(v+w) = f(v) + f(w)\]
-        and 
-        \[ f(\lambda \cdot v) = \lambda \cdot f(v).\]
-    \end{defn}
-
-    \begin{defn}
-        Given a vector space $V$ we call \textbf{1-form} a linear function $f :V \longrightarrow k$.
-        The set of all 1-forms on the vector space $V$ is called \textbf{dual vector space} and is denoted with $V^*$.
-    \end{defn}
+    \begin{ex}
+        An example of norm is the euclidean norm. Given $x \in \mathbb{R}^n$, we define
+        \[ \Vert x \Vert := \sqrt{\sum_{i=1}^n x_i^2}.\]
+        This norm represents the distance between a point $x \in \mathbb{R}^n$ and the origin.
+    \end{ex}
     
-    \section{Neurons}
-    In this chapter we introduce and study neurons. We are gonna start by the more basic one and proceed adding things until we reach a complete and full explanations of how neurons works and what they can do.
-
-    During this chapter we are going to introduce also notions of linear algebra, affine geometry and calculus to give to neurons a mathematical reason.
-
-    For coding in this first chapter we are going to use C and Python.
+    \section{Linear neurons}
     
+    \begin{defn}
+        A simple linear neuron, $n$, is a function
+        \[ n_a : \mathbb{R} \longrightarrow \mathbb{R}\]
+        such that $n_a(x) = a x $, and $a \in \mathbb{R}$.
+        The number $a$ is called parameter.
+        We will refer to this kind of neuron with SLN.
+    \end{defn}
 
-    \subsection{Basic neuron}
+    \begin{rmk}
+        By Example \ref{ex:f_a(x)=ax}, a simple linear neuron is a 1-parameter group of linear functions.
+    \end{rmk}
+
+    Technically speaking given a SLN, $n$, this is already a neural network. However we will see in the following that this type of neuron is not very interesting even if we can use it in some simple cases.
+
+    But for now we will try to work with this type of neuron and see what we can do. To work with a neural network, a neuron in this case, we need to introduce the notion of backpropagation.
     
+    \subsection{Backpropagation with a SLN}
+    Consider an SLN $n$. Consider a set of data $\{ (x_i, y_i) \}_{i =1, \dots, n}$. Backpropagation is a method used to find a parameter $\bar{t} \in \mathbb{R}$, so that the function $n_{\bar{t}}$ approximate the set of data $\{ (x_i, y_i) \}_{i =1, \dots, n}$, i.e.
+    \[ n_{\bar{t}}(x_i) \approx y_i, \, \forall i = 1, \dots, n.\]
 
-	%STAMPA DELLA BIBLIOGRAFIA
+    Consider and initial parameter $a \in \mathbb{R}$. So we have an inital approximation of the set of data give by the function $n_a$.
+    
+    The first thing we want to introduce is the cost function.
+    \begin{defn}
+        Given an SLN $\{ n_a \}_{a \in \mathbb{R}}$, and a set of data $\{ (x_i, y_i) \}_{i =1, \dots, n}$. We define the cost function
+        \[ C(t) := \sum_{i=1}^n (n_t(x_i) - y_i)^2.\]
+    \end{defn}
+
+    \begin{rmk}
+        The cost function $C(t)$ can be described also using the euclidean norm.
+        Define the vectors
+        \[ v(t) = \left ( \begin{matrix}
+            n_t(x_1) \\
+            n_t(x_2) \\
+            \vdots \\
+            n_t(x_n)
+        \end{matrix}  \right ) \hspace{1cm}
+        y = \left ( \begin{matrix}
+            y_1\\
+            y_2\\
+            \vdots\\
+            y_n
+        \end{matrix} \right ).\]
+        Then the cost function can be define as
+        \[ C(t) = \Vert v(t) - y \Vert^2.\]
+    \end{rmk}
+
+    So, to find the best approximation of our set of data, we simply needs to minimize the cost function $C(a)$. Indeed, suppose that $m \in \mathbb{R}$ realize the minimum of $C$, i.e.
+    \[ C(m) = \min_{a \in \mathbb{R}} C(a).\]
+    Therefore the vector $v(m)$ is the vector that best approximates the set of data.
+
+    To minimize the cost function $C$, we need to know how $C$ changes with respect to the parameter $t$ when the chosen parameter is $a$, and we do this by computing $\frac{\partial C}{\partial t}(a)$. Once we have the derivative of $C$ in $a$, we can analyze it:
+    \begin{enumerate}
+        \item[(1)] if $\frac{\partial C}{\partial t}(a) > 0$, then on the increasing of $a$ the cost will increase. Thus, in order to decrease the cost, we need to decrease the parameter, and our new parameter will be
+        \[ a' = a - \frac{\partial C}{\partial t}(a). \]
+        \item[(2)] if $\frac{\partial C}{\partial t}(a) < 0$, then on the increasing of $a$ the cost will decrease. Thus, in order to decrease the cost, we need to increase the parameter, and our new parameter will be
+        \[ a' = a - \frac{\partial C}{\partial t}(a). \]
+    \end{enumerate}
+
+    Now we have a new parameter $a'$, such that the vector $v(a')$ is a better approximation than $v(a)$ of the set of data.
+    The backtracking is the algorithm that repeats this process a fixed number of time $N \in \mathbb{N}$.
+
+    We give here the complete algorithm.
+    \begin{alg}[Backtracking, version 1]\ \\
+        Given $N \in \mathbb{N}$, $a \in \mathbb{R}$, an SLN $n$.\\
+        Define $a_1 = a$;\\
+        For $i = 2, \dots, N$:\\
+        \par\hspace{0.6cm}Compute $\frac{\partial C}{\partial t}(a_{i-1})$;\\
+        \par\hspace{0.6cm}Define $a_i = a_{i-1} - \frac{\partial C}{\partial t}(a_{i-1})$;\\
+    $a_N$ is the final approximation.        
+    \end{alg}
+    
+    %STAMPA DELLA BIBLIOGRAFIA
 	\printbibliography[title=References and Bibliography]
 	
 \end{document}
